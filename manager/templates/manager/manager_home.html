@@ -1,0 +1,12 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <h1 style="text-align: center;">Quản trị hệ thống</h1>
+    <div class="p-5">
+        <div class="d-flex justify-content-around">
+            <a class="btn btn-primary" href="{% url 'aprv_teacher_list' %}">Xét duyệt giáo viên</a>
+            <a class="btn btn-primary" href="{% url 'manager_course' %}">Quản trị khóa học</a>
+            <a class="btn btn-primary" >Quản trị người dùng</a>
+        </div>
+    </div>
+{% endblock %}

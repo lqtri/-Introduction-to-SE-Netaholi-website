@@ -1,0 +1,31 @@
+{% extends 'home/base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <div>
+        <h1>{{course.name}}</h1>
+            <img src="data:image/png;base64,{{ course.base64_cover_image }}" alt="Ảnh minh họa {{ course.name }}">
+        <ul>
+            <li>Loại khóa học: {{course.ctype}}</li>
+            <li>Ngày bắt đầu: {{course.start_date}}</li>
+            <li>Thời hạn: {{ course.duration }} ngày ({{course.get_status_display}})</li>            <li>Loại khóa học: {{course.ctype}}</li>
+            <li>Học phí: {{course.tuition_fee}}</li>
+            <li>Mô tả:
+                <p>{{course.description}}</p>
+            </li>
+            <li>Lịch trình:
+                <p>{{course.schedule}}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        Bạn chắc chắn muốn xóa khóa học này?
+        <form action="" method="post">
+            {% csrf_token %}
+            <a class="btn btn-info" href="{% url 'manager_course' %}">Hủy</a>
+            <input class="btn btn-danger" type="submit" value="Xác nhận">
+        </form>
+    </div>
+{% endblock content %}
+

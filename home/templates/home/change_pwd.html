@@ -1,0 +1,21 @@
+{% extends 'home/base.html' %}
+
+{% load bootstrap %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1>Thay đổi mật khẩu</h1>
+
+    <div class="mt-3">
+        <form method="post">
+            {% csrf_token %}
+            <div>
+            {{ form | bootstrap}}
+            </div>
+            <input class="btn btn-primary" type="submit" value="Xác nhận">
+        </form>
+    </div>
+</div>
+
+{% endblock content %}

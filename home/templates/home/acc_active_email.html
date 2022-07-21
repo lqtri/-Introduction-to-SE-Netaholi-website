@@ -1,0 +1,6 @@
+Kích hoạt tài khoản của bạn trên Netaholi
+
+Xin chào {{ user.userprofile.last_name }} {{ user.userprofile.first_name }},
+Vui lòng đi đến liên kết dưới đây để hoàn tất việc đăng ký cho tài khoản {{ user.username }}.
+
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}

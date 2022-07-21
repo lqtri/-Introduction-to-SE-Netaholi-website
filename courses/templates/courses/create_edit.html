@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <center>
+        <h1>{{action}} khóa học</h1>
+        {% if form.instance %}
+            {% if form.instance.cover_image_binary|length > 0 %}
+                <img src="data:image/png;base64,{{ form.instance.base64_cover_image }}" alt="Ảnh minh họa {{ course.name }}">
+            {% endif %}
+        {% endif %}
+    </center>
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|bootstrap_horizontal}}
+
+        <center>
+        <input class="btn btn-info" type="submit" value="Xác nhận">
+
+        {% if form.instance.id %}
+            <a class="btn btn-danger" href="{% url 'course_delete' form.instance.id %}">Xóa khóa học</a>
+        {% endif %}
+        </center>
+    </form>
+{% endblock content %}
+

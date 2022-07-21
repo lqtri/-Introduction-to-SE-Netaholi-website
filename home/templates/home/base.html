@@ -1,0 +1,128 @@
+{% load static %}
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Netaholi</title>
+
+<!--BOOTSTRAP ASSETS-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="{% static 'css/Footer-Basic.css' %}">
+<link rel="stylesheet" href="{% static 'css/Navigation-with-Button.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<!---->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-lg navigation-clean-button">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Netaholi</a>
+
+            <div class="navbar-nav mr-auto" id="navcol-1">
+                <form method="get" action="{% url 'course_search' %}" class="form-inline my-2 my-lg-0">
+                    <input name="q" class="form-control mr-sm-2" type="search" placeholder="Nhập tên khóa học" aria-label="Search">
+                    <input class="btn btn-outline-success my-2 my-sm-0" type="submit" value="Tìm">
+                        
+                    </input>
+                </form>
+                {% comment %} <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item"><a class="nav-link" href="#">Giới thiệu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Tuyển dụng</a></li>
+                </ul> {% endcomment %}
+            </div>
+            
+            <div>
+                <span class="navbar-text actions">
+
+                    <ul class="navbar-nav">
+                        {% if request.user.is_authenticated %}
+                        <div class="dropdown">
+                            <span class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Xin chào, {{ user.last_name }} {{ user.first_name }}
+                            </span>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'my_courses' %}">Các khóa học của tôi</a>
+                            {% if request.user.is_staff %}
+                            {% comment %} <a class="dropdown-item" href="{% url 'manager_home' %}">Truy cập trang quản trị</a> {% endcomment %}
+                                <a type="button" class="dropdown-item dropdown-toggle dropleft" data-toggle="dropdown">
+                                Các chức năng quản trị
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{% url 'aprv_teacher_list' %}">Xét duyệt giáo viên</a>
+                                    <a class="dropdown-item" href="{% url 'manager_course' %}">Quản trị khóa học</a>
+                                    <a class="dropdown-item" href="{% url 'manager_user' %}" >Quản trị người dùng</a>
+                                </div>
+                            {% endif %}
+                              <a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a>
+                              <a class="dropdown-item" href="{% url 'changepwd' %}">Đổi mật khẩu</a>
+                            </div>
+                        </div>
+                        {% else %}
+                            <li class="nav-item"><a class="login" href="{% url 'login' %}">Đăng nhập</a></li>
+                            <li class="nav-item"><a class="action-button" role="button"
+                                    href="{% url 'register' %}">Đăng ký</a></li>
+                        {% endif %}
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% comment %} <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Trang chủ</a></li>
+            {% if request.user.is_authenticated %}
+            {% if not request.user.is_staff %}
+            <li><a href="">Các khóa học của tôi</a></li>
+            {% else %}
+            <li><a href="{% url 'manager_home' %}">Đi đến trang quản trị</a></li>
+            {% endif %}
+
+            Xin chào, {{request.user.first_name}}! <a href="{% url 'logout' %}">Đăng xuất</a>
+            {% else %}
+            <li><a href="{% url 'login' %}">Đăng nhập</a></li>
+            {% endif %}
+            <hr>
+        </ul>
+    </nav> {% endcomment %}
+
+    <div class="container">
+        {% include 'home/render_messages.html' %}
+        {% include 'home/render_form_errors.html' %}
+
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+
+    <footer class="footer-basic">
+        <div class="social"><a href="#"><i class="icon ion-social-instagram"></i></a><a href="#"><i
+                    class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a
+                href="#"><i class="icon ion-social-facebook"></i></a></div>
+        <ul class="list-inline">
+            <li class="list-inline-item"><a href="#">Home</a></li>
+            <li class="list-inline-item"><a href="#">Services</a></li>
+            <li class="list-inline-item"><a href="#">About</a></li>
+            <li class="list-inline-item"><a href="#">Terms</a></li>
+            <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+        </ul>
+        <p class="copyright">© 2022 Group 08 - Introduction to SE 19_1</p>
+        <ul class="copyright">
+            <li>19120615 - Hùng Ngọc Phát</li>
+            <li>19120691 - Lê Quốc Trí</li>
+            <li>18120289 - Lâm Quốc Bình</li>
+            <li>19120626 - Hồ Minh Quân</li>
+        </ul>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
+</body>
+
+{% block script %}
+{% endblock script %}
+
+</html>

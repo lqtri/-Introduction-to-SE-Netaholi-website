@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% load bootstrap %}
+
+
+{% block content %}
+    <center>
+        <h1>Đánh giá khóa học</h1>
+        <h2>{{course.name}}</h2>
+        
+        <form method="post" action="">
+            {% csrf_token %}
+            <div>
+                <span id="rt-star-1" class="fa fa-star"></span>
+                <span id="rt-star-2" class="fa fa-star"></span>
+                <span id="rt-star-3" class="fa fa-star"></span>
+                <span id="rt-star-4" class="fa fa-star"></span>
+                <span id="rt-star-5" class="fa fa-star"></span>
+            </div>
+
+            <div>
+                {{ form|bootstrap_horizontal }}
+            </div>
+
+            <div><input class="btn btn-primary" type="submit" value="Xác nhận"></div>
+        </form>
+    </center>
+{% endblock content %}
+
+{% block script %}
+    <script>
+        const num_stars = 5;
+        // Loop through all star buttons
+        for (let i = 1; i <= num_stars; i++) {
+            // On button click 
+            $(`#rt-star-${i}`).click(() => {
+                // Set the star form attribute
+                $('input[name="star"]').val(i);
+
+                // Set all star spans from 1 to i to "rated"
+                for (let j = 1; j <= i; j++) {
+                    $(`#rt-star-${j}`).addClass("star-rated");
+                }
+                // Set all star spans from i+1 to 5 to "not rated"
+                for (let j = i + 1; j <= num_stars; j++) {
+                    $(`#rt-star-${j}`).removeClass("star-rated");
+                }
+            });
+        }
+    </script>
+{% endblock script %}
+

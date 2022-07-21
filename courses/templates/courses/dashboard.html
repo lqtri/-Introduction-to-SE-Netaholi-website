@@ -1,0 +1,54 @@
+{% extends "home/base.html" %}
+
+{% block content %}
+    <center>
+        <h1>{{course.name}}</h1>
+        
+        <div style="padding: 1em;">
+            <img src="data:image/png;base64,{{ course.base64_cover_image }}" alt="Ảnh minh họa {{ course.name }}">
+        </div>
+
+        <div class="d-flex justify-content-around">
+            <a class="btn btn-primary" href="{% url 'lesson' course.id %}">Tham gia buổi học</a>
+            {% if request.user.userprofile.is_teacher_admin %}
+                <a class="btn btn-primary" href="{% url 'material_create' course.id %}">Tạo tài liệu mới</a>
+            {% endif %}
+        </div>
+    </center>
+
+    <div class="container p-2">
+        <ul class="list-group">
+            <li class="list-group-item"><b>Ngày bắt đầu</b>:<br> {{course.start_date}}</li>
+            <li class="list-group-item"><b>Thời hạn</b>:<br> {{ course.duration }} ngày ({{course.get_status_display}})</li>
+            <li class="list-group-item"><b>Lịch trình</b>:<br>
+                <p>{{course.schedule}}</p>
+            </li>
+        </ul>
+    </div>
+
+    <div class="container p-2">
+        <div>
+            <h2>Tài liệu</h2>
+            <ul>
+            {% for material in materials %}
+                {% if material.type == 'document' %}
+                    <li><a href="{% url 'material' course.id material.id %}">{{ material.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="container p-2">
+        <div>
+            <h2>Bài tập</h2>
+            <ul>
+            {% for material in materials %}
+                {% if material.type == 'assignment' %}
+                    <li><a href="{% url 'material' course.id material.id %}">{{ material.title }}</a></li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

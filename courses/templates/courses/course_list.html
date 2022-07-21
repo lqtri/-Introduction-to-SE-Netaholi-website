@@ -1,0 +1,29 @@
+{% extends 'home/base.html' %} 
+
+{% block content %}
+    <h1>{{ listname }}</h1>
+    {% with is_teacher=request.user.userprofile.is_teacher %}
+    <div>
+        {% if is_teacher %}
+        <h3>Tham gia với vai trò học viên</h2>
+        {% endif %}
+        <div class="list-group">
+        {% for course in student_courses %}
+            {% include 'courses/course_list_item_part.html' %}
+        {% endfor %}
+        </div>
+    </div>
+
+    {% if is_teacher %}
+    <div>
+        <h3>Tham gia với vai trò giảng viên</h2>
+            <div class="list-group">
+            {% for course in teacher_courses %}
+                {% include 'courses/course_list_item_part.html' %}
+            {% endfor %}
+            </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+{% endblock content %}
+

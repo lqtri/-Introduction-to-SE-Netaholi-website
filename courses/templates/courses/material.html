@@ -1,0 +1,14 @@
+{% extends "home/base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1>{{ material.title }}</h1>
+    {{ material.content }}
+
+    {% if request.user.userprofile.is_teacher_admin %}
+    <div class="d-flex justify-content-around">
+        <a class="btn btn-primary" href="{% url 'material_edit' course.id material.id %}">Chỉnh sửa</a>
+        <a class="btn btn-danger" href="">Xóa</a>
+    </div>
+    {% endif %}
+{% endblock %}

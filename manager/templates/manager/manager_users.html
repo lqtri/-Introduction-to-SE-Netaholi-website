@@ -1,0 +1,52 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <h1 class="text-center">Quản trị người dùng</h1>
+
+    <div class="p-2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Họ tên</th>
+                    <th>Loại</th>
+                    <th>Ngày đăng ký</th>
+                    <th>Nghề nghiệp</th>
+                    <th>Tr.thái k.hoạt</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td scope="row" {% if user.username == 'admin' %}class="text-danger font-weight-bold"{% endif %}>
+                        {{ user.username }}
+                    </td>
+                    <td>{{ user.last_name }} {{ user.first_name }}</td>
+                    <td>
+                        {{ user.userprofile.get_role_repr }}
+                    </td>
+                        
+                    <td>{{ user.date_joined }}</td>
+                    <td>{{ user.userprofile.profession }}</td>
+                    <td>{{ user.is_active }}</td>
+                    <td>
+                        {% if user.username != 'admin' %}
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                            Quản lý
+                            </a>
+                        
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'user_info' user.username %}">Xem chi tiết</a>
+                                <a onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này không?');" class="dropdown-item" href="{% url 'user_delete' user.username %}">Xóa</a>
+                                <a class="dropdown-item" href="{% url 'user_active_flip' user.username %}" >Thay đổi tr.thái k.hoạt</a>
+                            </div>
+                        {% endif %}
+                        </div>
+                    </td>
+                {% endfor %}
+            </tbody>
+        </table>
+    <div>
+{% endblock %}

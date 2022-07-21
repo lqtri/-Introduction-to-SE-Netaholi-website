@@ -1,0 +1,53 @@
+{% extends 'home/base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <h1>{{ course.name }}</h1>
+
+    <div class="container card">
+        <div class="card-body">
+            <h2 class="card-title">Thêm giáo viên mới</h2>
+            <div>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|bootstrap_horizontal }}
+                    <input type="submit" value="Thêm" class="btn btn-primary">
+                    <a class="btn btn-primary">Tìm mã giáo viên</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container card mt-5">
+        <div class="card-body">
+            <h2 class="card-title">Danh sách giáo viên hiện có trong khóa học</h2>
+            <table class="table">
+                <thead>
+                    <th>Họ</th>
+                    <th>Tên</th>
+                    <th>Email</th>
+                    <th>Nghề nghiệp</th>
+                    <th>Nơi công tác</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for ct in course_teachers %}
+                    <tr>
+                        <td>{{ ct.teacher.last_name }}</td>
+                        <td>{{ ct.teacher.first_name }}</td>
+                        <td>{{ ct.teacher.email }}</td>
+                        <td>{{ ct.teacher.userprofile.profession }}</td>
+                        <td>{{ ct.teacher.userprofile.department }}</td>
+                        <td>
+                            <form method="post" action="{% url 'deassng_teacher_course' course.id ct.teacher.username %}">
+                                {% csrf_token %}
+                                <input type="submit" value="Xóa" class="btn btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa giảng viên này khỏi khóa học không?');">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>    
+{% endblock %}

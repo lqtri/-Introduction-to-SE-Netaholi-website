@@ -1,0 +1,75 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <h1 style="text-align: center;">{{ course.name }}</h1>
+    <center>
+        <img style="padding: 1em;" src="data:image/png;base64,{{ course.base64_cover_image }}" alt="Ảnh minh họa {{ course.name }}">
+        
+        <div style="padding: 1em;">
+            {% if user_enrolled %}
+            <a class="btn btn-primary" href="{% url 'dashboard' course.id %}">Đi đến trang chính khóa học</a>  
+            {% if course.is_ended %}
+            <p>
+                Khóa học đã hoàn tất. Hãy dành ra chút thời gian để <a href="{% url 'course_rate' course.id %}">đánh giá</a> khóa học này nhé!
+            </p>
+            {% endif %}
+            {% elif course.is_ended %}
+            Khóa học đã hết hạn. Không thể đăng ký.
+            {% else %}
+            <a class="btn btn-info" href="{% url 'enroll' course.id %}">Đăng ký ngay!</a>
+            {% endif %}
+        <div>
+    </center>
+
+    {% if request.user.is_staff %}
+    <div class="container mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Khu vực quản trị</h5>
+                <a class="btn btn-info" href="{% url 'dashboard' course.id %}">Xem trang chính</a>
+                <a class="btn btn-primary" href="{% url 'assng_teacher_course' course.id %}">Phân công giáo viên</a>
+                <a class="btn btn-warning" href="{% url 'course_edit' course.id %}">Chỉnh sửa thông tin</a>
+                <a class="btn btn-danger" href="{% url 'course_delete' course.id %}">Xóa</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="container">
+        <h2>Thông tin chi tiết</h2>
+        <ul class="list-group">
+            <li class="list-group-item"><b>Ngày bắt đầu</b>:<br> {{course.start_date}}</li>
+            <li class="list-group-item"><b>Thời hạn</b>:<br> {{ course.duration }} ngày ({{course.get_status_display}})</li>
+            <li class="list-group-item"><b>Loại khóa học</b>:<br> {{course.ctype}}</li>
+            <li class="list-group-item"><b>Học phí</b>:<br> {{course.tuition_fee}}</li>
+            <li class="list-group-item"><b>Loại khóa học</b>:<br> {{course.ctype}}</li>
+            <li class="list-group-item"><b>Đánh giá trung bình</b>:<br> {{course.average_rating}}</li>
+            <li class="list-group-item"><b>Mô tả</b>:<br>
+                <p>{{course.description}}</p>
+            </li>
+            <li class="list-group-item"><b>Lịch trình</b>:<br>
+                <p>{{course.schedule}}</p>
+            </li>
+            <li class="list-group-item"><b>Danh sách giảng viên</b>:<br>
+                <ul>
+                {% for ct in course_teachers %}
+                    <li>{{ ct.teacher.last_name }} {{ ct.teacher.first_name }} ({{ ct.role }})</li>
+                {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    {% if course.is_ended %}
+    <div class="container mt-3">
+        <h2>Các đánh giá khóa học</h2>
+        <ul class="list-group">
+            {% for rate in ratings %}
+                <li class="list-group-item">{{ rate.star }} <span class="fa fa-star"></span> <br> 
+                    {{ rate.content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endblock content %}
+

@@ -1,0 +1,18 @@
+{% extends 'home/base.html' %} 
+
+{% block content %}
+    <h1>Tìm kiếm khóa học</h1>
+    <small>
+        Bạn có thể gõ một phần của tên khóa học hoặc mô tả để tìm kiếm
+    </small>
+    <div class="mt-3">
+        <h5>Từ khóa: {{ keyword }}</h5>
+    </div>
+    <div>
+        <div class="list-group">
+        {% for course in courses %}
+            {% include 'courses/course_list_item_part.html' %}
+        {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

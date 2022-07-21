@@ -1,0 +1,29 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 style="text-align: center;">Đăng ký</h1>
+    <div class="d-flex justify-content-center">
+        <div>
+            <a href="{% url 'register' 'teacher' %}" class="card">
+                <img class="center-cropped" src="{% static 'img/teacher_pic.jpg' %}" alt="Ảnh minh họa {{ course.name }}">
+                <div class="card-body">
+                    <h4 class="card-title">Đăng ký giảng viên</h4>
+                    <p>Bạn sẽ được</p>
+                </div>
+            </a>
+        </div>
+
+        <div>
+            <a href="{% url 'register' 'student' %}" class="card">
+                <img class="center-cropped" src="{% static 'img/student_pic.jpg' %}" alt="Ảnh minh họa {{ course.name }}">
+                <div class="card-body">
+                    <h4 class="card-title">Đăng ký học viên</h4>
+                    <p>Bạn sẽ được</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends 'home/base.html' %}
+{% load bootstrap %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h1>Đăng ký khóa học</h1>
+        <ul class="list-group">
+            <div class="list-group-item">
+                <h2>{{course.name}} </h2>
+            </div>
+            <div class="list-group-item">
+                <img src="data:image/png;base64,{{ course.base64_cover_image }}" alt="Ảnh minh họa {{ course.name }}">
+            </div>
+            <li class="list-group-item"><b>Ngày bắt đầu</b>:<br> {{course.start_date}}</li>
+            <li class="list-group-item"><b>Thời hạn</b>:<br> {{ course.duration }} ngày ({{course.get_status_display}})</li>
+            <li class="list-group-item"><b>Loại khóa học</b>:<br> {{course.ctype}}</li>
+            <li class="list-group-item"><b>Mô tả</b>:<br>
+                <p>{{course.description}}</p>
+            </li>
+            <li class="list-group-item"><b>Lịch trình</b>:<br>
+                <p>{{course.schedule}}</p>
+            </li>
+
+            <li class="list-group-item text-danger"><b>Mã đơn đăng ký</b>:<br>
+                <p>{{invoice_id}}</p>
+            </li>
+
+            <li class="list-group-item">
+                <p><b>Bạn cần thanh toán:<br> {{ course.tuition_fee }} VNĐ</b></p>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <p>Vui lòng chuyển khoản sang một trong các STK sau</p>
+        <ul>
+            <li>Vietcombank: 187618738991 (Nguyen Van A)</li>
+            <li>Techcombank: 75572878773 (Phan Van B)</li>
+            <li>BIDV: 12008767578989 (Dinh Thi C)</li>
+        </ul>
+        <p>Phần chú thích ghi mã đơn đăng ký.</p>
+    </div>
+
+    <form method="POST" action="">
+    {% csrf_token %}
+        <div>
+            <input type="checkbox" name="agree-checkbox" required>
+            Tôi đồng ý với các điều khoản của Netaholi khi đăng ký khóa học này
+        </div>
+        <div>
+            Sau khi chuyển tiền xong, nhấn vào nút dưới đây.<br>
+            <input class="btn btn-primary" type="Submit" value="Hoàn tất">
+        </div>
+    </form>
+{% endblock %}

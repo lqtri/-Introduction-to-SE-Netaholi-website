@@ -1,0 +1,7 @@
+<div>
+    {% if form and form.errors %}
+        {% for key,value in form.errors.items %} 
+        <div class="alert alert-danger">{{ key|escape }} : {{ value|escape }}</div>
+        {% endfor %}
+    {% endif %}
+</div>

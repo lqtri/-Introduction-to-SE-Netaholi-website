@@ -1,0 +1,33 @@
+{% extends 'home/base.html' %}
+{% load bootstrap %}
+
+{% block content %}
+    <h1>Danh sách các giáo viên đăng ký đang chờ xét duyệt</h1>
+
+    <div>
+        Số lượng giáo viên đang đợi duyệt: {{ waiting_teachers | length }}
+    <div>
+    
+    {% for teacher in waiting_teachers %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ teacher.last_name }} {{ teacher.first_name }}</h5 >
+            <ul>
+                <li>Email: {{ teacher.email }}</li>
+                <li>Giới tính: {{ teacher.userprofile.get_gender_display }}</li>
+                <li>Nghề nghiệp: {{ teacher.userprofile.profession }}</li>
+                <li>Nơi công tác: {{ teacher.userprofile.department }}</li>
+                <p>{{ teacher.userprofile.bio }}</p>
+            </ul>
+            <div>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="teacher_username" value="{{ teacher.username }}"/>
+                    <input class="btn btn-primary" type="submit" name="req_approve" value="Đồng ý">
+                    <input class="btn btn-danger" type="submit" name="req_disaprv" value="Từ chối">
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

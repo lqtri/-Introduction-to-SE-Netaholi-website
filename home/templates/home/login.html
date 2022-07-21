@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2>Đăng nhập</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="form-group">
+            <label for="exampleInputEmail1">Tên người dùng</label>
+            <input type="text" class="form-control" name="username" required>
+            </div>
+            <div class="form-group">
+            <label for="exampleInputPassword1">Mật khẩu</label>
+            <input type="password" class="form-control" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Đăng nhập</button>
+
+            <p>Bạn chưa có tài khoản? <a href="{% url 'register' %}">Đăng ký ngay!</a></p>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+

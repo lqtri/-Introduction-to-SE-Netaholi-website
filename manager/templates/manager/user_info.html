@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+
+{% block content %}
+    <h1 class="text-center">Thông tin người dùng</h1>
+
+    <div class="container">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <b>Username</b>: {{ user.username }}
+            </li>
+            <li class="list-group-item">
+                <b>Họ tên</b>: {{ user.last_name }} {{ user.first_name }}
+            </li>
+            <li class="list-group-item">
+                <b>Nghề nghiệp</b>:  {{ user.userprofile.profession }}
+            </li>
+            <li class="list-group-item">
+                <b>Email</b>:  {{ user.email }}
+            </li>
+            <li class="list-group-item">
+                <b>Ngày sinh</b>: {{ user.userprofile.birthday }}
+            </li>
+            <li class="list-group-item">
+                <b>Giới tính</b>: {{ user.userprofile.get_gender_display }}
+            </li>
+            <li class="list-group-item">
+                <b>Ngày đăng ký</b>: {{ user.joined_date }}
+            </li>
+            <li class="list-group-item">
+                <b>Lần đăng nhập cuối</b>: {{ user.last_login }}
+            </li>
+            <li class="list-group-item">
+                <b>Trạng thái kích hoạt</b>: {{ user.is_active }}
+            </li>
+            <li class="list-group-item">
+                <b>Vai trò tài khoản</b>: {{ user.userprofile.get_role_repr }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}

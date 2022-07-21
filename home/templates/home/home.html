@@ -1,0 +1,28 @@
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="p-3" style="text-align: center;">
+        <h1>Netaholi</h1>
+        <h4>Hệ thống học trực tuyến hàng đầu Việt Nam</h4>
+    </div>
+    <div class="container-fluid">
+        <div class="d-flex flex-row flex-wrap justify-content-center">
+        {% for course in courses %}
+            <div class="card m-3">
+                <ul class="list-group list-group-flush">
+                    <img class="list-group-item center-cropped" src="data:image/png;base64,{{ course.base64_cover_image }}" alt="Ảnh minh họa {{ course.name }}">
+                    <h4 style="text-align: center;" class="card-title list-group-item"><a href="{% url 'details' course.id %}">{{ course.name }}</a></h4>
+
+                    <li class="list-group-item">Loại khóa học: {{course.ctype}}</li>
+                    <li class="list-group-item">Ngày bắt đầu: {{course.start_date}}</li>
+                    <li class="list-group-item">Thời hạn: {{ course.duration }} ngày ({{course.get_status_display}})</li>
+                    <li class="list-group-item">Học phí: {{course.tuition_fee}}</li>
+                </ul>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
+
+
